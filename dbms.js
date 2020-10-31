@@ -47,7 +47,7 @@ function reply(inputval){
        input.value = null;
        msgno += 1;
        frame.lastChild.id = msgno;
-       frame.lastChild.childNodes[1].textContent = "What do you wish to know/do? (Current Date and Time / Covid Situation / Guess a number / Tell a joke / Play quiz to get a discount)"
+       frame.lastChild.childNodes[1].textContent = "What do you wish to know/do? (Covid Situation(worldwide) / Covid Situation(India) / Covid helpline in India / Date and time / Guess a number / Tell a joke / Play quiz to get a discount)"
     }
 
     else if(inputval.includes("DATE") || inputval.includes("Date") || inputval.includes("date") || inputval.includes("Time") || inputval.includes("TIME") || inputval.includes("time")){
@@ -56,7 +56,7 @@ function reply(inputval){
     frame.lastChild.childNodes[1].textContent = datetime
     }
 
-    else if(inputval.includes("covid") || inputval.includes("COVID") || inputval.includes("Covid") || inputval.includes("Corona") || inputval.includes("CORONA") || inputval.includes("corona")){
+    else if(inputval.includes("worldwide") || inputval.includes("WORLDWIDE") || inputval.includes("Worldwide")){
 
         fetch('https://disease.sh/v3/covid-19/all?yesterday=true&twoDaysAgo=true&allowNull=false').then(function(response) {
         return response.json()
@@ -148,6 +148,15 @@ function reply(inputval){
         frame.lastChild.childNodes[1].textContent = "Sorry, but that was the wrong ans :("
     }
     }
+
+    else if((inputval.includes("helpline") || inputval.includes("HELPLINE") || inputval.includes("Helpline"))){
+        fetch('https://raw.githubusercontent.com/amodm/api-covid19-in/master/data/contacts-in.json').then(function(response) {
+        return response.json()
+    })
+    .then(function(data) {
+        frame.lastChild.childNodes[1].textContent = "Allover india: " + "Number: " + data.primary.number + "  Tollfree-number: 1075" + "  Email: " + data.primary.email;
+})
+}
 
     else{
         frame.lastChild.childNodes[1].textContent = "Sorry, but I dont understand that"
